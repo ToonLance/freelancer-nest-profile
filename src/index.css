@@ -7,13 +7,13 @@
 
 @layer base {
   :root {
-    --background: 0 0% 0%; /* Black background */
-    --foreground: 0 0% 100%; /* White text */
-    --primary: 0 0% 100%; /* White primary */
-    --primary-foreground: 0 0% 0%; /* Black primary foreground */
-    --secondary: 20 0% 20%; /* Dark gray secondary */
-    --secondary-foreground: 0 0% 100%; /* White secondary text */
-    --border: 0 0% 20%; /* Dark gray border */
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 20 0% 20%;
+    --secondary-foreground: 0 0% 100%;
+    --border: 0 0% 20%;
   }
 }
 
@@ -23,15 +23,27 @@
   }
   
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply bg-background text-foreground font-sans antialiased;
   }
 }
 
 /* Additional global styles for black and white theme */
 .glass-card {
-  @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-lg shadow-lg;
+  @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-lg;
 }
 
 .hover-effect {
-  @apply transition-all duration-300 ease-in-out hover:opacity-80;
+  @apply transition-all duration-300 ease-in-out hover:bg-white/[0.07] hover:scale-[1.02];
+}
+
+/* Grid background pattern */
+.bg-grid-white\/5 {
+  background-image: linear-gradient(to right, rgb(255 255 255 / 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.05) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* Custom utilities */
+.text-balance {
+  text-wrap: balance;
 }
