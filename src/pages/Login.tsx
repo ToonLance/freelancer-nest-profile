@@ -17,6 +17,10 @@ const Login = () => {
     }
   }, [currentUser, navigate]);
   
+  const handleSignInWithGoogle = () => {
+    signInWithGoogle('/dashboard');
+  };
+  
   return (
     <Layout withFooter={false}>
       <div className="flex items-center justify-center min-h-[calc(100vh-4rem)]">
@@ -32,7 +36,7 @@ const Login = () => {
             <Button 
               variant="outline" 
               className="w-full flex items-center justify-center gap-2"
-              onClick={signInWithGoogle}
+              onClick={handleSignInWithGoogle}
             >
               <FaGoogle className="h-5 w-5 text-red-500" />
               Sign in with Google
