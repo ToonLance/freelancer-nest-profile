@@ -11,7 +11,7 @@ import SetupUsername from "./pages/SetupUsername";
 import Dashboard from "./pages/Dashboard";
 import ProfilePage from "./pages/ProfilePage";
 import NotFound from "./pages/NotFound";
-import { AuthProvider } from "./contexts/AuthContext";
+import { AuthProviderWithNavigation } from "./components/AuthProviderWithNavigation";
 
 const queryClient = new QueryClient();
 
@@ -21,7 +21,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <AuthProvider>
+        <AuthProviderWithNavigation>
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/signup" element={<SignUp />} />
@@ -31,7 +31,7 @@ const App = () => (
             <Route path="/profile/:username" element={<ProfilePage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
-        </AuthProvider>
+        </AuthProviderWithNavigation>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

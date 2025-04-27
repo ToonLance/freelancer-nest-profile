@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { 
   User, 
@@ -8,13 +9,12 @@ import {
 import { auth, googleProvider, db } from '@/lib/firebase';
 import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { useToast } from '@/hooks/use-toast';
-import { useNavigate } from 'react-router-dom';
 
 interface AuthContextType {
   currentUser: User | null;
   userProfile: UserProfile | null;
   loading: boolean;
-  signInWithGoogle: () => Promise<void>;
+  signInWithGoogle: (redirect?: string) => Promise<void>;
   signOut: () => Promise<void>;
   setUsername: (username: string) => Promise<boolean>;
   checkUsernameAvailability: (username: string) => Promise<boolean>;
@@ -40,12 +40,16 @@ export function useAuth() {
   return context;
 }
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
+interface AuthProviderProps {
+  children: React.ReactNode;
+  navigate: (path: string) => void;
+}
+
+export function AuthProvider({ children, navigate }: AuthProviderProps) {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
-  const navigate = useNavigate();
 
   // Check if username exists
   const checkUsernameAvailability = async (username: string): Promise<boolean> => {
@@ -118,7 +122,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   // Sign in with Google
-  const signInWithGoogle = async () => {
+  const signInWithGoogle = async (redirect?: string) => {
     try {
       setLoading(true);
       const result = await signInWithPopup(auth, googleProvider);
@@ -163,7 +167,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if (!userData.username) {
           navigate('/setup-username');
         } else {
-          navigate('/dashboard');
+          navigate(redirect || '/dashboard');
         }
       }
     } catch (error: any) {
